@@ -10,6 +10,7 @@ import random
 # via links through which ideas are exchanged.
 
 seed = 315
+random.seed(seed)
 
 def initialize():
     ## Set simulation parameters
@@ -53,10 +54,13 @@ def initialize():
         print("must have at least two representative ideas")
         pass
 
+    # Create a set of `n` representative ideas
     representative_ideas = {key : 0 for key in random.sample(problem_space, n)}
 
+    # Create Ut: True utility values that are not known to agents
+    true_utility_dict = {key: random.uniform(0,1) for key in problem_space}
 
-    # Assign master utility value to ideas
+    # Create Um: Master utility values of ideas in the agent problem space
     for i, (key, value) in enumerate(representative_ideas.items()):
         # step 1: assign 0 and 1 to two of the representative ideas
         if i == 0:
@@ -66,6 +70,10 @@ def initialize():
 
     # initialize a dictionary to hold the utility values for every idea in the problem space
     master_utility_dict = {key : 0 for key in problem_space}
+
+    # Interpolate utility for the rest of the ideas in the problem space that 
+    # were not included in the set of representative ideas
+    # {k:v for k,v in E.items() if k not in P}
 
     ## Place an agent on each node of the network
     print(g)
