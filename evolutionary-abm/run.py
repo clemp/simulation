@@ -49,8 +49,23 @@ def initialize():
     if n > len(problem_space):
         print("cannot choose more representative ideas than those that exist in the problem space")
         pass
+    elif n < 2:
+        print("must have at least two representative ideas")
+        pass
 
-    representative_ideas = random.sample(problem_space, n)
+    representative_ideas = {key : 0 for key in random.sample(problem_space, n)}
+
+
+    # Assign master utility value to ideas
+    for i, (key, value) in enumerate(representative_ideas.items()):
+        # step 1: assign 0 and 1 to two of the representative ideas
+        if i == 0:
+            representative_ideas[key] = 1
+        elif i > 1: # default values are 0 so we already have that assignment
+            representative_ideas[key] = random.uniform(0, 1)
+
+    # initialize a dictionary to hold the utility values for every idea in the problem space
+    master_utility_dict = {key : 0 for key in problem_space}
 
     ## Place an agent on each node of the network
     print(g)
