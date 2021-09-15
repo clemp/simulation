@@ -24,7 +24,7 @@ def hamming_distance(a: tuple, b: tuple) -> int:
         return dist_counter
 
 def Ut(v: tuple, S: dict) -> float:
-    """Utility function for true value for any idea in the problem space.
+    """Utility function for `True` value for any idea in the problem space.
     If the idea `v` is included in the set of representative ideas `S` then
     the already assigned utility is returned.
 
@@ -46,14 +46,24 @@ def Ut(v: tuple, S: dict) -> float:
         ut = sum([S[vi] * pow(hamming_distance(vi, v), -2) for vi in S.keys()]) / sum([pow(hamming_distance(vi, v), -2) for vi in S.keys()])
     return ut
 
-def Um(v: tuple) -> float:
-    """[summary]
+def Um(v: tuple, beta: float) -> float:
+    """Utility function for `Master` value for any idea in the problem space.
+    
+    Master utility function simulates group-level bias by adding random perturbations 
+    to the output of True utility algorithm. 
+
+    Each bit of the idea `v` is flipped with probability 0.25 * beta, and then a random number
+    in [-beta, beta] is added to the utility value output of the `True` utility function.
+
+    Larger values of `beta` represent lack of understanding about the problem, while `beta` = 0 
+    represents a perfect understanding of the problem.
 
     Args:
-        v (tuple): [description]
+        v (tuple): idea to calculate utility of
+        beta (float): bias parameter in [0, 1] that flips each bit in the idea with probability 0.25 * beta
 
     Returns:
-        float: [description]
+        float: Master utility value Um of idea `v` in range [-1, 1]
     """
 
 def initialize():
