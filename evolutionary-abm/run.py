@@ -97,11 +97,17 @@ def initialize():
 
     # Assign true utility to all ideas in the problem space
     # first assign utility to representative ideas.    
+
+    # select two random index to assign the 1 and 0 value to
+    random_idx = random.sample(range(len(representative_ideas.items())), 2)
     for i, (key, value) in enumerate(representative_ideas.items()):
         # step 1: assign 0 and 1 to two of the representative ideas
-        if i == 0:
+
+        if i == random_idx[0]:
+            representative_ideas[key] = 0
+        elif i == random_idx[1]:
             representative_ideas[key] = 1
-        elif i > 1: # default values are 0 so we already have that assignment
+        else: # default values are 0 so we already have that assignment
             representative_ideas[key] = random.uniform(0, 1)
     
     Ut((0,1,1,0), representative_ideas)
