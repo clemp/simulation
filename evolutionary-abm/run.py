@@ -61,6 +61,9 @@ def initialize():
     
     ## Create the problem space
     M = 4 # ideas are M-dimensional binary space
+    # Problem space consists of all possible M-length bit ideas
+    problem_space = list(product([0, 1], repeat=M))
+
     agents = [[] for agent in range(N)]
 
     # Initialize each agent with representative ideas
@@ -68,15 +71,8 @@ def initialize():
 
     # Fill each agent with `n_init_ideas` number of random ideas
     for agent in agents:
-        for i in range(n_init_ideas): # for each initial idea
-            idea = tuple()
-            for j in range(M): # create a random idea of length M
-                idea += (random.randint(0,1),)
-            agent.append(idea)
-
-    ## Create the problem space and assign utility values 
-    # Problem space consists of all possible M-length bit ideas
-    problem_space = list(product([0, 1], repeat=M))
+        ideas = random.choices(problem_space, k = n_init_ideas)
+        [agent.append(idea) for idea in ideas]
 
     # Create set of n representative ideas
     n = 5
