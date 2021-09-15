@@ -23,6 +23,30 @@ def hamming_distance(a: tuple, b: tuple) -> int:
                 dist_counter += 1
         return dist_counter
 
+def Ut(v: tuple, S: dict) -> float:
+    """Returns the utility value for any idea in the problem space.
+    If the idea `v` is included in the set of representative ideas `S` then
+    the already assigned utility is returned.
+
+    Otherwise the utility is interpolated as a weighted average of the utility
+    values from the set of representative ideas.
+
+    Args:
+        v (tuple): idea to calculate utility of
+        S (dict): {idea: utility value} dict for each idea in the representative
+
+    Returns:
+        float: utility value of idea `v` in range [0, 1]
+    """
+    # if the idea is in the set of representative ideas then
+    # return the associated utility value
+    if v in S.items():
+        return S[v]
+    else:
+        ut = sum([S[vi] * pow(hamming_distance(vi, v), -2) for vi in S.keys()]) / sum([pow(hamming_distance(vi, v), -2) for vi in S.keys()])
+    return ut
+
+
 def initialize():
     ## Set simulation parameters
     # Total number of steps to iterate the simulation.
@@ -69,18 +93,23 @@ def initialize():
     # Denoted as `S` in the original paper
     # S = {v_i | i = 1...n}
     representative_ideas = {key : 0 for key in random.sample(problem_space, n)}
+    # representative_ideas = list(random.sample(problem_space, n))
 
-    # Create Ut: True utility values that are not known to agents
-    true_utility_dict = {key: random.uniform(0,1) for key in problem_space}
-
-    # Create Um: Master utility values of ideas in the agent problem space
+    # Assign true utility to all ideas in the problem space
+    # first assign utility to representative ideas.    
     for i, (key, value) in enumerate(representative_ideas.items()):
         # step 1: assign 0 and 1 to two of the representative ideas
         if i == 0:
             representative_ideas[key] = 1
         elif i > 1: # default values are 0 so we already have that assignment
             representative_ideas[key] = random.uniform(0, 1)
+    
+    Ut((0,1,1,0), representative_ideas)
 
+    # Create Ut: True utility values that are not known to agents
+    true_utility_dict = {key: 0 for key in problem_space}
+    # then interpolate utility for remaining ideas in problem space that are
+    # not in the representative ideas, using the Ut function
     # initialize a dictionary to hold the utility values for every idea in the problem space
     master_utility_dict = {key : 0 for key in problem_space}
 
