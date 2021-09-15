@@ -24,7 +24,7 @@ def hamming_distance(a: tuple, b: tuple) -> int:
         return dist_counter
 
 def Ut(v: tuple, S: dict) -> float:
-    """Returns the utility value for any idea in the problem space.
+    """Utility function for true value for any idea in the problem space.
     If the idea `v` is included in the set of representative ideas `S` then
     the already assigned utility is returned.
 
@@ -36,7 +36,7 @@ def Ut(v: tuple, S: dict) -> float:
         S (dict): {idea: utility value} dict for each idea in the representative
 
     Returns:
-        float: utility value of idea `v` in range [0, 1]
+        float: True utility value Ut of idea `v` in range [0, 1]
     """
     # if the idea is in the set of representative ideas then
     # return the associated utility value
@@ -46,6 +46,15 @@ def Ut(v: tuple, S: dict) -> float:
         ut = sum([S[vi] * pow(hamming_distance(vi, v), -2) for vi in S.keys()]) / sum([pow(hamming_distance(vi, v), -2) for vi in S.keys()])
     return ut
 
+def Um(v: tuple) -> float:
+    """[summary]
+
+    Args:
+        v (tuple): [description]
+
+    Returns:
+        float: [description]
+    """
 
 def initialize():
     ## Set simulation parameters
