@@ -1,5 +1,6 @@
 
 from itertools import repeat, product
+from math import dist
 import networkx as nx
 import random
 
@@ -11,6 +12,16 @@ import random
 
 seed = 315
 random.seed(seed)
+
+def hamming_distance(a: tuple, b: tuple) -> int:
+    if len(a) != len(b):
+        raise Exception('a and b must be the same length')
+    else:
+        dist_counter = 0
+        for n in range(len(a)):
+            if a[n] != b[n]:
+                dist_counter += 1
+        return dist_counter
 
 def initialize():
     ## Set simulation parameters
