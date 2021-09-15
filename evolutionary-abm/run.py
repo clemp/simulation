@@ -46,7 +46,7 @@ def Ut(v: tuple, S: dict) -> float:
         ut = sum([S[vi] * pow(hamming_distance(vi, v), -2) for vi in S.keys()]) / sum([pow(hamming_distance(vi, v), -2) for vi in S.keys()])
     return ut
 
-def Um(v: tuple, beta: float) -> float:
+def Um(v: tuple, S: dict, beta: float) -> float:
     """Utility function for `Master` value for any idea in the problem space.
     
     Master utility function simulates group-level bias by adding random perturbations 
@@ -65,6 +65,14 @@ def Um(v: tuple, beta: float) -> float:
     Returns:
         float: Master utility value Um of idea `v` in range [-1, 1]
     """
+
+    # First randomly flip bits of the idea
+    nv = tuple([abs(bit - 1) if random.random() > 0.25 * beta else bit for bit in v ])
+    
+    # Add random number to idea with flipped bits
+    um = Ut(nv, S) + random.uniform(-1*beta, beta)
+    return um
+    
 
 def initialize():
     ## Set simulation parameters
@@ -130,6 +138,8 @@ def initialize():
     # then interpolate utility for remaining ideas in problem space that are
     # not in the representative ideas, using the Ut function
     # initialize a dictionary to hold the utility values for every idea in the problem space
+
+    Um((0,1,1,0), representative_ideas, .5)
     master_utility_dict = {key : 0 for key in problem_space}
 
     # Interpolate utility for the rest of the ideas in the problem space that 
