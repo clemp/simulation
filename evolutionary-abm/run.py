@@ -55,6 +55,8 @@ def initialize():
         pass
 
     # Create a set of `n` representative ideas
+    # Denoted as `S` in the original paper
+    # S = {v_i | i = 1...n}
     representative_ideas = {key : 0 for key in random.sample(problem_space, n)}
 
     # Create Ut: True utility values that are not known to agents
