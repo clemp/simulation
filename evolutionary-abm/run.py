@@ -109,8 +109,6 @@ def initialize():
             representative_ideas[key] = 1
         else: # default values are 0 so we already have that assignment
             representative_ideas[key] = random.uniform(0, 1)
-    
-    Ut((0,1,1,0), representative_ideas)
 
     # Create Ut: True utility values that are not known to agents
     true_utility_dict = {idea: Ut(idea, representative_ideas) for idea in problem_space}
