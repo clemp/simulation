@@ -40,7 +40,7 @@ def Ut(v: tuple, S: dict) -> float:
     """
     # if the idea is in the set of representative ideas then
     # return the associated utility value
-    if v in S.items():
+    if v in S.keys():
         return S[v]
     else:
         ut = sum([S[vi] * pow(hamming_distance(vi, v), -2) for vi in S.keys()]) / sum([pow(hamming_distance(vi, v), -2) for vi in S.keys()])
@@ -107,7 +107,7 @@ def initialize():
     Ut((0,1,1,0), representative_ideas)
 
     # Create Ut: True utility values that are not known to agents
-    true_utility_dict = {key: 0 for key in problem_space}
+    true_utility_dict = {idea: Ut(idea, representative_ideas) for idea in problem_space}
     # then interpolate utility for remaining ideas in problem space that are
     # not in the representative ideas, using the Ut function
     # initialize a dictionary to hold the utility values for every idea in the problem space
