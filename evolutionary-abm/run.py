@@ -60,6 +60,7 @@ def Um(v: tuple, S: dict, beta: float) -> float:
 
     Args:
         v (tuple): idea to calculate utility of
+        S (dict): 
         beta (float): bias parameter in [0, 1] that flips each bit in the idea with probability 0.25 * beta
 
     Returns:
@@ -73,6 +74,22 @@ def Um(v: tuple, S: dict, beta: float) -> float:
     um = Ut(nv, S) + random.uniform(-1*beta, beta)
     return um
     
+def Uj(v: tuple, S: dict, beta: float, xi: float) -> float:
+    """Utility function for `Agent` value for any idea in the idea space.
+
+    Args:
+        v (tuple): idea to calculate utility of
+        S (dict): {idea: utility value} dict for each idea in the representative
+        beta (float): Master utility bias parameter in [0, 1] that flips each bit in the idea with probability 0.25 * beta
+        xi (float): parameter that determines variations of utility functions among agents
+
+    Returns:
+        float: Agent utility value Uj of idea `v` in range [max(Um(v) - xi, 0), min(Um(v) + xi, 1)]
+    """
+    um = Um(v, S, beta)
+
+    # Add random perturbation to utility function
+    um * random.random() * xi
 
 def initialize():
     ## Set simulation parameters
