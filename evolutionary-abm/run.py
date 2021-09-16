@@ -89,7 +89,15 @@ def Uj(v: tuple, S: dict, beta: float, xi: float) -> float:
     um = Um(v, S, beta)
 
     # Add random perturbation to utility function
-    um * random.random() * xi
+    uj = um + random.uniform(-1, 1) * xi
+
+    # Logic to keep Uj(v) within range
+    if uj < 0:
+        uj = 0
+    elif uj > 1:
+        uj = 1
+    
+    return uj
 
 def initialize():
     ## Set simulation parameters
