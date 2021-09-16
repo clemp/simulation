@@ -89,7 +89,7 @@ def Uj(v: tuple, S: dict, beta: float, xi: float) -> float:
     um = Um(v, S, beta)
 
     # Add random perturbation to utility function
-    uj = um + random.uniform(-1, 1) * xi
+    uj = um + xi
 
     # Logic to keep Uj(v) within range
     if uj < 0:
@@ -120,11 +120,14 @@ def initialize():
 
     # Initialize each agent with representative ideas
     n_init_ideas = 3 # each agent starts with this number of random ideas of length M
-
+    xi = 4 # parameter to set amount of heterogeneity among agents
+    
     # Fill each agent with `n_init_ideas` number of random ideas
     for agent in agents:
         ideas = random.choices(problem_space, k = n_init_ideas)
-        [agent.append(idea) for idea in ideas]
+        agent_xi = random.uniform(-1, 1) * xi # randomize xi for each agent
+        perspective = [ideas, agent_xi]
+        [agent.append(perspective) for idea in ideas]
 
     # Create set of n representative ideas
     n = 5
