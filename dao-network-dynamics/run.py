@@ -96,12 +96,13 @@ def initialize():
         a.getTokens(ntokens)
         agents_holders.append(a)
         
-    print("staff", [sum(a.countTokens() for a in agents_staff)])
-    print("core", [sum(a.countTokens() for a in agents_core)])
-    print("bounty", [sum(a.countTokens() for a in agents_bounty)])
-    print("holders", [sum(a.countTokens() for a in agents_holders)])
+    print("staff", sum([a.countTokens() for a in agents_staff]))
+    print("core", sum([a.countTokens() for a in agents_core]))
+    print("bounty", sum([a.countTokens() for a in agents_bounty]))
+    print("holders", sum([a.countTokens() for a in agents_holders]))
     
     print("done loading agents")
+    print("initialize token value", treasury_balance / num_tokens)
     
     
 
