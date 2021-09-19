@@ -1,4 +1,5 @@
-import networkx as nx
+import numpy as np
+import random
 
 # Roles
 # Staff
@@ -9,6 +10,12 @@ import networkx as nx
 # Casual
 #  - Audience
 #  - Token holders
+
+# Assign global variables
+global num_new_products, product_release_schedule
+
+# Number of steps to simulate
+N = 365 # imagine each step is one day in a year
 
 # fixed token supply
 num_tokens = 1000
@@ -103,19 +110,21 @@ def initialize():
     
     print("done loading agents")
     print("initialize token value", treasury_balance / num_tokens)
-    
-    
 
-    
+    # Assign a random number of new products/services to be released during the simulated year
+    num_new_products = random.randint(4, 15)
 
-    
+    # Create a product release schedule: 1 indicates a product was released in that step
+    product_release_schedule = np.random.binomial(1, num_new_products / N, size = N)
 
+# Encode the interactions and dynamics that happen at each simulated step    
+def update():
+    pass
 
 def observe():
     pass
 
-def update():
-    pass
+
 
 if __name__ == "__main__":
     initialize()
